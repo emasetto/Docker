@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'edher123'
-app.config['MYSQL_DATABASE_DB'] = 'banco'
+app.config['MYSQL_DATABASE_DB'] = 'teste'
 app.config['MYSQL_DATABASE_HOST'] = '172.17.0.0'
 mysql.init_app(app)
 
@@ -19,11 +19,11 @@ def main():
 def gravar():
     nome = request.form['nome']
     cpf = request.form['cpf']
-    email = request.form['email']
-    if nome and cpf and email:
+    endereco = request.form['endereco']
+    if nome and cpf and endereco:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('insert into tb_cadastro (user_nome, user_cpf, user_email) VALUES (%s, %s, %s)', (nome, cpf, email))
+        cursor.execute('insert into tb_cadastro (user_nome, user_cpf, user_endereco) VALUES (%s, %s, %s)', (nome, cpf, endereco))
         conn.commit()
     return render_template('auladoker.html')
 
@@ -31,7 +31,7 @@ def gravar():
 def listar():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute('select user_nome, user_cpf, user_email from tb_cadastro')
+    cursor.execute('select user_nome, user_cpf, user_endereco from tb_cadastro')
     data = cursor.fetchall()
     conn.commit()
     return render_template('lista.html', datas = data)
