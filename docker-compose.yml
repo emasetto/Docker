@@ -2,7 +2,7 @@ services:
  web:
    build: .
    working_dir: /data
-   command: python aulabd.py
+   command: python fullstack.py
    links:
     - db
    volumes:
