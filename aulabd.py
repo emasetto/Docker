@@ -18,12 +18,12 @@ def main():
 @app.route('/gravar', methods=['POST', 'GET'])
 def gravar():
     nome = request.form['nome']
-    cpf = request.form['cpf']
-    endereco = request.form['endereco']
-    if nome and cpf and endereco:
+    valor = request.form['valor']
+    categoria = request.form['categoria']
+    if nome and valor and categoria:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('insert into tb_cadastro (user_nome, user_cpf, user_endereco) VALUES (%s, %s, %s)', (nome, cpf, endereco))
+        cursor.execute('insert into tb_produto (nome, valor, categoria) VALUES (%s, %s, %s)', (nome, valor, categoria))
         conn.commit()
     return render_template('auladoker.html')
 
@@ -31,7 +31,7 @@ def gravar():
 def listar():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute('select user_nome, user_cpf, user_endereco from tb_cadastro')
+    cursor.execute('select nome, valor, categoria from tb_produto')
     data = cursor.fetchall()
     conn.commit()
     return render_template('lista.html', datas = data)
